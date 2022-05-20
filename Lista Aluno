@@ -1,0 +1,136 @@
+package listaalunos;
+
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import listaalunos.models.Aluno;
+
+
+public class ListaAlunos {
+
+    public static ArrayList<Aluno> listaAluno;
+
+    public static void main(String[] args) {
+
+        listaAluno = new ArrayList<>();
+
+        int opcao = -1;
+        do {
+            opcao = Integer.parseInt(
+                    JOptionPane.showInputDialog(
+                            "Selecione a opção:\n"
+                            + "1 - Adicionar Aluno \n"
+                            + "2 - Remover Aluno \n"
+                            + "3 - Pesquisar Aluno \n"
+                            + "0 - Sair"));
+            if (opcao == 1) {
+                adicionarAluno();
+            } else if (opcao == 3) {
+                pesquisarAluno();
+            } else if (opcao == 2) {
+                removerAluno();
+            }
+
+        } while (opcao != 0);
+    }
+
+    public static void adicionarAluno() {
+        Aluno novoAluno = new Aluno();
+        //Adiciona o ra ao aluno
+        int novoRa = Integer.parseInt(
+                JOptionPane.showInputDialog(
+                        "Informe o RA do aluno:"));
+        //Adiciona o nome
+        String novoNome = JOptionPane.showInputDialog(
+                "Informe o NOME do aluno:");
+
+        //Adiciona a data de nascimento
+        String novoDtNasc = JOptionPane.showInputDialog(
+                "Informe a DT de NASCIMENTO do aluno:");
+
+        //Adiciona o cpf
+        String novoCpf = JOptionPane.showInputDialog(
+                "Informe o CPF do aluno:");
+
+        novoAluno.setRa(novoRa);
+        novoAluno.setNome(novoNome);
+        novoAluno.setDtNasc(novoDtNasc);
+        novoAluno.setCpf(novoCpf);
+
+        listaAluno.add(novoAluno);
+
+        System.out.println("Lista contém: " + listaAluno.size());
+
+        JOptionPane.showMessageDialog(null,
+                "ALuno (" + novoNome + ") adicionado com sucesso!");
+
+    }
+
+    public static void pesquisarAluno() {
+
+        String ra = JOptionPane.showInputDialog(
+                "Informe o RA do Aluno a ser pesquisado");
+
+        Aluno aluno = retornaAluno(Integer.parseInt(ra));
+
+        if (aluno != null) {
+            JOptionPane.showMessageDialog(null,
+                    "Aluno pesquisado: \n"
+                    + "R.A.: " + aluno.getRa() + "\n"
+                    + "Nome: " + aluno.getNome() + "\n"
+                    + "CPF: " + aluno.getCpf() + "\n"
+                    + "Dt. Nasc.: " + aluno.getDtNasc());
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Não foi encontrado o aluno com RA: ("
+                    + ra + ").");
+        }
+
+    }
+
+    public static Aluno retornaAluno(int ra) {
+
+        for (int i = 0; i < listaAluno.size(); i++) {
+            Aluno alunoPosicao = listaAluno.get(i);
+            if (alunoPosicao.getRa() == ra) {
+                return alunoPosicao;
+            }
+
+        }
+        return null;
+    }
+
+    public static Aluno removeAluno(int ra) {
+
+        for (int i = 0; i < listaAluno.size(); i++) {
+            Aluno alunoPosicao = listaAluno.get(i);
+            if (alunoPosicao.getRa() == ra) {
+                listaAluno.remove(alunoPosicao);
+            }
+
+        }
+        return null;
+    }
+
+    public static void removerAluno() {
+
+        String ra = JOptionPane.showInputDialog(
+                "Informe o RA do Aluno a ser removido");
+
+        Aluno aluno = retornaAluno(Integer.parseInt(ra));
+        Aluno aluno1 = removeAluno(Integer.parseInt(ra));
+
+        if (aluno != null) {
+            JOptionPane.showMessageDialog(null,
+                    "Aluno removido: \n"
+                    + "R.A.: " + aluno.getRa() + "\n"
+                    + "Nome: " + aluno.getNome() + "\n"
+                    + "CPF: " + aluno.getCpf() + "\n"
+                    + "Dt. Nasc.: " + aluno.getDtNasc());
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "Não foi encontrado o aluno com RA: ("
+                    + ra + ").");
+        }
+        
+    }
+}
